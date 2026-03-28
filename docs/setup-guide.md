@@ -1,6 +1,8 @@
-# Setup Guide — From Zero to Running in 15 Minutes
+# Setup Guide — From Zero to Running
 
 This guide walks you through everything you need to go from "I have an idea" to "Claude is building it."
+
+> Allow 30-60 minutes for your first setup. Subsequent projects reuse the same accounts and take under 10 minutes.
 
 ---
 

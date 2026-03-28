@@ -63,6 +63,11 @@ SOFT FAIL: Minor issues → document issues, proceed with caveat
 HARD FAIL: Critical gaps → re-invoke the agent with specific feedback
 ```
 
+### Retry Limits
+- Maximum 2 re-invocations per agent per task
+- After 2 HARD FAILs, escalate to user: "Agent [name] is struggling with [specific issue]. Here's what it produced — want to adjust the requirements or proceed with what we have?"
+- Never retry indefinitely
+
 ### Phase Gate Evaluation
 
 **Phase 0 → Phase 1 (Strategy → PRD):**

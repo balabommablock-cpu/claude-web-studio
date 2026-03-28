@@ -31,9 +31,6 @@ This framework covers all of it.
 
 ```bash
 # In your project directory (or an empty directory for a new project):
-npx claude-web-studio init
-
-# Or manually clone:
 git clone https://github.com/balabommablock-cpu/claude-web-studio.git .studio
 cp .studio/CLAUDE.md ./CLAUDE.md
 cp -r .studio/agents ./agents
@@ -191,7 +188,7 @@ Growth agent produces:
 
 ## Agent Architecture
 
-18 specialist agents, each with:
+28 specialist agents, each with:
 - Strict scope (what they own and don't own)
 - Required inputs (what context they need)
 - Specific deliverables (exact artifacts)

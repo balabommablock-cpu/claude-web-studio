@@ -134,7 +134,7 @@ Each agent owns specific directories. No agent may create files outside its scop
 
 | Agent | May create/modify |
 |-------|-------------------|
-| Frontend | `src/app/`, `src/components/`, `src/hooks/`, `src/styles/`, `public/` |
+| Frontend | `src/app/`, `src/components/`, `src/hooks/`, `public/` |
 | Backend | `src/api/`, `src/lib/db/`, `src/lib/auth/`, `src/lib/stripe/`, `src/middleware/` |
 | Design | `src/styles/`, `tailwind.config.ts`, `src/components/ui/` |
 | Testing | `src/__tests__/`, `e2e/`, `vitest.config.ts`, `playwright.config.ts` |
@@ -203,6 +203,7 @@ Skip: Strategy, User Research, Brand Identity, Devil's Advocate
 Start at: Architecture → Design → Build → Test → Ship
 Use sensible defaults for everything skipped
 ```
+Note: Express mode uses sensible defaults for brand (neutral palette, system fonts, professional tone). The Design agent will generate minimal brand defaults as part of its work.
 
 **Thorough mode** (default — full lifecycle):
 ```
