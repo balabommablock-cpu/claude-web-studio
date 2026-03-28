@@ -166,10 +166,59 @@ After the primary agent produces work, invoke the reviewer:
 
 ---
 
+## EVAL SYSTEM — TIGHT FEEDBACK LOOPS
+
+### The Evaluator (agents/00-evaluator.md)
+Invoked automatically after every agent output. Checks completeness, quality, accuracy, and brand alignment. Returns PASS/SOFT FAIL/HARD FAIL. On HARD FAIL, the originating agent is re-invoked with specific feedback.
+
+### The Devil's Advocate (agents/00-devils-advocate.md)
+Invoked after high-stakes decisions: Strategy, Architecture, Pricing, PRD scope. Finds the strongest argument against each decision. Returns PROCEED/CAUTION/RECONSIDER. Runs a Pre-Mortem before Phase 3 (Build).
+
+### Self-Critique Protocol
+Every agent must include at the end of its output:
+```
+## Self-Assessment
+- Confidence: [High/Medium/Low]
+- Assumptions: [what I assumed without evidence]
+- Weakest point: [what I'm least sure about]
+- What Devil's Advocate should challenge: [specific decision]
+```
+
+### Eval Loop Flow
+```
+User request → Orchestrator routes → Agent produces output
+  → Evaluator checks quality gates → PASS? → proceed
+                                   → FAIL? → re-invoke agent with feedback
+  → Devil's Advocate challenges (if high-stakes) → PROCEED? → next phase
+                                                  → RECONSIDER? → escalate to user
+```
+
+---
+
+## MODES — Express vs Thorough
+
+**Express mode** (user says "just build it" / "skip research"):
+```
+Skip: Strategy, User Research, Brand Identity, Devil's Advocate
+Start at: Architecture → Design → Build → Test → Ship
+Use sensible defaults for everything skipped
+```
+
+**Thorough mode** (default — full lifecycle):
+```
+All phases, all agents, eval loops at every gate, devil's advocate on every decision
+```
+
+Detect mode from user intent. "I have an idea" = thorough. "Build me X" = express.
+
+---
+
 ## AVAILABLE AGENTS
 
 | # | Agent | File | Owns |
 |---|-------|------|------|
+| E | Evaluator | `agents/00-evaluator.md` | Quality gates, eval loops, self-critique enforcement |
+| D | Devil's Advocate | `agents/00-devils-advocate.md` | Challenge strategy, architecture, pricing, scope |
 | 1 | Strategy | `agents/01-strategy.md` | Market research, ICP, positioning, GTM, unit economics |
 | 2 | PRD | `agents/02-prd.md` | Requirements, user stories, acceptance criteria, roadmap |
 | 3 | Architecture | `agents/03-architecture.md` | Tech stack, system design, decisions with tradeoffs |
@@ -188,16 +237,33 @@ After the primary agent produces work, invoke the reviewer:
 | 16 | Security | `agents/16-security.md` | OWASP audit, secrets, auth hardening, dependency scanning |
 | 17 | Accessibility | `agents/17-accessibility.md` | WCAG 2.2 AA, screen reader, keyboard nav, color contrast |
 | 18 | Documentation | `agents/18-documentation.md` | API docs, user docs, OpenAPI spec, onboarding guide |
+| 19 | Brand Identity | `agents/19-brand.md` | Name, voice, tone, visual direction, tagline, mission |
+| 20 | User Research | `agents/20-user-research.md` | Interviews, validation, journey mapping, synthesis |
+| 21 | Content Strategy | `agents/21-content.md` | Blog calendar, SEO articles, help center, tutorials |
+| 22 | UX Writing | `agents/22-ux-writing.md` | In-app copy, onboarding, errors, empty states, notifications |
+| 23 | Customer Support | `agents/23-support.md` | Help center, FAQ, chatbot, templates, escalation |
+| 24 | Pricing Strategy | `agents/24-pricing.md` | WTP, value pricing, tiers, competitive pricing, free/paid |
+| 25 | Financial Modeling | `agents/25-finance.md` | CAC, LTV, burn rate, runway, break-even, cohort economics |
+| 26 | Community | `agents/26-community.md` | Discord/Slack, moderation, ambassadors, community-led growth |
 
 ---
 
 ## ROUTING TABLE
 
-### New product from scratch
+### New product from scratch (Thorough mode)
 ```
-Strategy → PRD [review: Architecture for feasibility] → Architecture
-→ Design → Frontend + Backend (parallel) [review: Security + Testing]
-→ SEO → Analytics → Testing → Performance → Legal → Marketing → DevOps → Launch
+Brand Identity → User Research → Strategy [eval: Devil's Advocate challenges]
+→ PRD [eval: Architecture reviews feasibility] → Pricing Strategy [eval: Devil's Advocate]
+→ Architecture [eval: Devil's Advocate] → Design → UX Writing
+→ Frontend + Backend (parallel) [eval: Security + Testing review]
+→ SEO → Analytics → Content Strategy → Testing → Performance
+→ Legal → Customer Support → Marketing → DevOps → Community → Launch → Growth
+```
+
+### New product from scratch (Express mode)
+```
+Architecture → Design → Frontend + Backend (parallel)
+→ Testing → SEO → Analytics → Legal → DevOps → Launch
 ```
 
 ### "I have an idea for [X]"
